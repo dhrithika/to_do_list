@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced To-Do List</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      resize: none;
+      outline: none;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    textarea:focus {
+      border-color: #6c63ff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #6c63ff;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background: #574bdb;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      background: #f4f4f4;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.3s;
+    }
+
+    li:hover {
+      transform: scale(1.02);
+    }
+
+    .task-buttons button {
+      width: auto;
+      padding: 6px 10px;
+      margin-left: 5px;
+      font-size: 14px;
+      border-radius: 8px;
+    }
+
+    .done {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .done-btn {
+      background: #28a745;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>✨ My To-Do List</h1>
+
+    <textarea id="taskInput" placeholder="Enter multiple tasks (one per line)..."></textarea>
+    <button onclick="addTasks()">Add Tasks</button>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTasks() {
+      let taskInput = document.getElementById("taskInput");
+      let tasks = taskInput.value.trim().split("\n");
+
+      tasks.forEach(task => {
+        if (task.trim() !== "") {
+          let li = document.createElement("li");
+
+          let taskText = document.createElement("span");
+          taskText.textContent = task;
+
+          let buttonDiv = document.createElement("div");
+          buttonDiv.classList.add("task-buttons");
+
+          let doneBtn = document.createElement("button");
+          doneBtn.textContent = "Done";
+          doneBtn.classList.add("done-btn");
+          doneBtn.onclick = function() {
+            taskText.classList.toggle("done");
+          };
+
+          let deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Delete";
+          deleteBtn.classList.add("delete-btn");
+          deleteBtn.onclick = function() {
+            li.remove();
+          };
+
+          buttonDiv.appendChild(doneBtn);
+          buttonDiv.appendChild(deleteBtn);
+
+          li.appendChild(taskText);
+          li.appendChild(buttonDiv);
+
+          document.getElementById("taskList").appendChild(li);
+        }
+      });
+
+      taskInput.value = "";
+    }
+  </script>
+
+</body>
+</html>
